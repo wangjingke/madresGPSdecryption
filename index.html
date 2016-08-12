@@ -10,20 +10,16 @@
 </head>
 
 <body>
-<h1>MADRES GPS Data Decryption</h1>
-<p>
+<h1 align="center">MADRES GPS Data Decryption</h1>
+<p></p>
+<p align="center">
     Please type in the password for decryption:
     <input type="text" id="password" /><br />
 </p>
 
 <form>
-    <style type="text/css">
-    .fieldset-auto-width {
-         display: inline-block;
-    }
-    </style>
-    <div>
-        <fieldset class="fieldset-auto-width">
+    <div align="center">
+        <fieldset style="display: inline-block">
             <legend>Single record decryption</legend>
             <textarea rows="5" cols="100" id="encryptedContent">Please enter encrypted location entries here...</textarea><br />
             <p><input type="button" id="decryptButton" value="Decrypt" onclick="decrypt()" /></p>
@@ -31,12 +27,14 @@
         </fieldset>
     </div>
     <p></p>
-    <div>
-        <fieldset class="fieldset-auto-width">
-            <legend>file decryption</legend>
+    <div align="center">
+        <fieldset style="width:500px">
+            <legend>File decryption</legend>
             <p>
                 Please select the file to be decrypted:<br />
                 <input type="file" id="rawData" />
+            </p>
+            <p>
                 <input type="button" id="decodeButton" value="Process" onclick="decode(inputFile = 'rawData')"/>
             </p>
         </fieldset>
