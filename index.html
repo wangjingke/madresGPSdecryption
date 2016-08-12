@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>madresGPS Decryption</title>
+    <script src="./js/aes.js"></script>
+    <script src="./js/mode-ecb-min.js"></script>
+    <script src="./js/papaparse.min.js"> </script>
+    <script src="./js/madresGpsDecryption.js"></script>
+</head>
+
+<body>
+<h1>MADRES GPS Data Decryption</h1>
+<p>
+    Please type in the password for decryption:
+    <input type="text" id="password" /><br />
+</p>
+
+<form>
+    <style type="text/css">
+    .fieldset-auto-width {
+         display: inline-block;
+    }
+    </style>
+    <div>
+        <fieldset class="fieldset-auto-width">
+            <legend>Single record decryption</legend>
+            <textarea rows="5" cols="100" id="encryptedContent">Please enter encrypted location entries here...</textarea><br />
+            <p><input type="button" id="decryptButton" value="Decrypt" onclick="decrypt()" /></p>
+            <textarea rows="5" cols="100" id="decryptedContent"></textarea><br />
+        </fieldset>
+    </div>
+    <p></p>
+    <div>
+        <fieldset class="fieldset-auto-width">
+            <legend>file decryption</legend>
+            <p>
+                Please select the file to be decrypted:<br />
+                <input type="file" id="rawData" />
+                <input type="button" id="decodeButton" value="Process" onclick="decode(inputFile = 'rawData')"/>
+            </p>
+        </fieldset>
+    </div>
+
+
+</form>
+
+<script type = "text/javascript">
+
+
+
+</script>
+
+
+
+</body>
+</html>
