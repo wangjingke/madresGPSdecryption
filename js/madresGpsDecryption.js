@@ -51,7 +51,7 @@ function decode(inputFile) {
         for (var i = 0; i < input.length; i++) {
             var inputX = input[i];
             var entryX = [];
-            if (inputX[1]=="subjectID") {subjectID = inputX[2]}
+            if (inputX[1]=="SubjectID") {subjectID = inputX[2]}
             if (inputX[1]=="Tracking") {
                 entryX.push(subjectID); // ID
                 entryX.push(inputX[0]); // timestamp
