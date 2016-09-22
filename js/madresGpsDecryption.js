@@ -39,8 +39,13 @@ function decode(inputFile) {
     reader.onload = (function(f) {
         return function(event) {
             var csv  = event.target.result;
-            var data = Papa.parse(csv);
-            result = decryptFile(data.data);
+            var data = [];
+            Papa.parse(csv, {
+                step:function(results, parser) {
+                    data.push(results.data);
+                }
+            });
+            result = decryptFile(data);
             download(contentToDownload = result, originalFileName = f.name);
         }
     })(fileUpload.files[0]) // wrapping onload function in another function, so the closure gives access to file name
