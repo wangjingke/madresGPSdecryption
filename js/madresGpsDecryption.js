@@ -39,10 +39,10 @@ function decode(inputFile) {
     reader.onload = (function(f) {
         return function(event) {
             var csv  = event.target.result;
-            var data = [];
+            data = [];
             Papa.parse(csv, {
                 step:function(results, parser) {
-                    data.push(results.data);
+                    data.push(results.data[0]);
                 }
             });
             result = decryptFile(data);
@@ -71,9 +71,18 @@ function decode(inputFile) {
     }
 
     function download(contentToDownload, originalFileName) {
-        var newFileName = originalFileName.split(".csv")[0]+"_decoded.csv";
-        var content = "data:text/csv;charset=utf-8,";
+        newFileName = originalFileName.split(".csv")[0]+"_decoded.csv";
 
+        content = [];
+        contentToDownload.forEach(function(infoArray, index){
+           dataString = infoArray.map(function(item) {return '"' + item + '"'}).join(",") + "\n"; //wrap each item with quotes, then join
+           content.push(dataString);
+        });
+
+        var file = new File(content, newFileName, {type: "text/csv;charset=utf-8"});
+        saveAs(file);
+        /*
+        content = "data:text/csv;charset=utf-8,";
         contentToDownload.forEach(function(infoArray, index){
            dataString = infoArray.map(function(item) {return '"' + item + '"'}).join(","); //wrap each item with quotes, then join
            content += dataString + "\n";
@@ -85,5 +94,6 @@ function decode(inputFile) {
         link.setAttribute("download", newFileName);
         document.body.appendChild(link); // Required for FireFox
         link.click()
+        */
     }
 }
