@@ -51,7 +51,14 @@ function decode(inputFile) {
     })(fileUpload.files[0]) // wrapping onload function in another function, so the closure gives access to file name
 
     function decryptFile(input) {
-        var output = [];
+        function plusToNum(x) {
+            if (x == "+") {
+                return(1);
+            } else {
+                return(0);
+            }
+        }
+        var output = [["subjectID", "string_time", "date", "time", "timestamp", "source", "latitude", "longitude", "accuracy", "altitude", "velocity", "sat_inUse", "sat_inView", "wifi_on", "wifi_conencted", "network_on", "network_connected"]];
         var subjectID = "";
         for (var i = 0; i < input.length; i++) {
             var inputX = input[i];
@@ -59,10 +66,32 @@ function decode(inputFile) {
             if (inputX[1]=="SubjectID") {subjectID = inputX[2]}
             if (inputX[1]=="Tracking") {
                 entryX.push(subjectID); // ID
-                entryX.push(inputX[0]); // timestamp
-                entryX.push(decipher(encryptedString=inputX[2].toString(), password=code));
-                for (var j = 3; j < inputX.length; j++) {
-                    entryX.push(inputX[j]);
+                entryX.push(inputX[0]); // datetime
+                entryX.push(inputX[0].split(" ")[0]) // date
+                entryX.push(inputX[0].split(" ")[1]) // time
+                entryX.push(inputX[3]); // timestamp
+                recodeX = decipher(encryptedString=inputX[2].toString(), password=code);
+                segX = recodeX.split(" ");
+                if (recodeX.includes("network")) {
+                    entryX.push("network");
+                    entryX.push(segX[1].split(",")[0]);
+                    entryX.push(segX[1].split(",")[1]);
+                    entryX.push(segX[2].replace("acc=", ""));
+                    entryX.push("", "", "", "");
+                    entryX.push(plusToNum(inputX[4].substring(4, 5)));
+                    entryX.push(plusToNum(inputX[4].substring(5, 6)));
+                    entryX.push(plusToNum(inputX[5].substring(7, 8)));
+                    entryX.push(plusToNum(inputX[5].substring(8, 9)));
+                } else {
+                    entryX.push("gps");
+                    entryX.push(segX[1].split(",")[0]);
+                    entryX.push(segX[1].split(",")[1]);
+                    entryX.push(segX[2].replace("acc=", ""));
+                    entryX.push(segX[4].replace("alt=", ""));
+                    entryX.push(segX[5].replace("vel=", ""));
+                    entryX.push(inputX[4]);
+                    entryX.push(inputX[5]);
+                    entryX.push("", "", "", "");
                 }
             }
             if (entryX.length > 0) {output.push(entryX)}
